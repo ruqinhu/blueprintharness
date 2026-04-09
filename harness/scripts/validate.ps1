@@ -76,9 +76,9 @@ if ($ActiveTasks) {
             $Q1Unfilled = $TaskContent -match "### Q1:[\s\S]*?\[回答"
             $Q2Unfilled = $TaskContent -match "### Q2:[\s\S]*?\[回答"
             if ($Q1Unfilled -or $Q2Unfilled) {
-                Write-Host "  ⚠️  WARN: ${FilePath} 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。" -ForegroundColor Yellow
+                Write-Host "  ⚠️  WARN: $($Task.Name) 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。" -ForegroundColor Yellow
             } else {
-                Write-Host "  ✅ ${FilePath}: 收尾反思已填或已确认完成。" -ForegroundColor Green
+                Write-Host "  ✅ $($Task.Name): 收尾反思已填或已确认完成。" -ForegroundColor Green
             }
         }
     }

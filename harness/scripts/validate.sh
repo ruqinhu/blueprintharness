@@ -74,10 +74,15 @@ if [ -n "$ACTIVE_TASKS" ]; then
     if ! grep -q "## 5. 🧘 收尾反思" "$task"; then
       echo_red "  ❌ FAIL: 任务 $task 损坏，缺少“收尾反思”章节。"
       PASS=false
-    elif grep -A 5 "## 5. 🧘 收尾反思" "$task" | grep -q "\[待填写\]"; then
-      echo_yellow "  ⚠️  WARN: $task 包含未填写的“收尾反思”，在归档前必须完成回答。"
     else
-      echo_green "  ✅ $task: 收尾反思已就绪。"
+      # 深度检查：检测是否保留了模板中的提示文字（即未填）
+      Q1_UNFILLED=$(grep "### Q1:" "$task" -A 5 | grep "\[回答")
+      Q2_UNFILLED=$(grep "### Q2:" "$task" -A 5 | grep "\[回答")
+      if [ -n "$Q1_UNFILLED" ] || [ -n "$Q2_UNFILLED" ]; then
+        echo_yellow "  ⚠️  WARN: $task 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。"
+      else
+        echo_green "  ✅ $task: 收尾反思已就绪。"
+      fi
     fi
   done
 else
