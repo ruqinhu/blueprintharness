@@ -73,7 +73,7 @@ NO CONFLICT WITHOUT ESCALATION.
 
 ---
 
-## 6. 法定仲裁优先级
+## 7. 法定仲裁优先级
 
 面对文档冲突时的决策顺序（由高到低）：
 1. **DOMAIN_MODEL.md** (领域实体与硬性业务规则)
