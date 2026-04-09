@@ -1,6 +1,7 @@
 # [功能名称] 设计规格书 (TEMPLATE)
 
 > 创建日期: YYYY-MM-DD
+> 版本: v1 (Initial) | Revision: 0
 > 所属模块: 订单 / 支付 / 营销 / ...
 > 状态: Draft
 

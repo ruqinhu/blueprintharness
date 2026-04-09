@@ -11,7 +11,9 @@ NO CONFLICT WITHOUT ESCALATION.
 ```
 
 - **精确锚点引用**：在生成任何业务代码前，必须引用 `DOMAIN_MODEL` 或 `BUSINESS_PROCESS` 中的原文。代码上方必须包含 `// @blueprint-ref: [锚点ID/规则编号BR-xxx/Mermaid节点] [引用的业务规则简述]`。**无精确引用，禁止编写代码。**
-- **证据先于断言**：在声明任何任务完成前，必须执行 `bash harness/scripts/validate.sh` 并输出完整结果。
+- **证据先于断言**：在声明任何任务完成前，必须执行验证脚本并输出完整结果。
+  - Windows: `powershell -ExecutionPolicy Bypass -File harness/scripts/validate.ps1`
+  - Linux/sh: `bash harness/scripts/validate.sh`
 - **冲突即停并上报**：发现文档间存在冲突或歧义时，禁止自行揣测，必须立即停止并请求人类搭档裁决。
 
 ---
@@ -23,7 +25,7 @@ NO CONFLICT WITHOUT ESCALATION.
 | 阶段 | 动作 | 准入/准出条件 |
 | :--- | :--- | :--- |
 | **Phase 0: 启动** | 阅读 `harness/docs/` 下的所有核心文档 + `memory/lessons.md`。 | **准入**：任务启动。**准出**：在对话中明确列出你识别出的 1-3 个核心业务点。 |
-| **Phase 1: 理解** | 生成规格书 `harness/plans/specs/_TEMPLATE.md`。 | **准入**：Phase 0 完成。**准出**：人类批准该规格书。 |
+| **Phase 1: 理解** | 基于 `harness/plans/specs/_TEMPLATE.md` 新建规格书。 | **准入**：Phase 0 完成。**准出**：人类批准位于 `harness/plans/specs/` 下的具名规格书文件。 |
 | **Phase 2: 分解** | 生成原子任务计划 `harness/plans/tasks/active/`。 | **准入**：Phase 1 完成。涉及“相关经验模式”扫描。**准出**：人类批准任务列表。 |
 | **Phase 3: 实现** | 编写代码，严格遵守 `@blueprint-ref` 锚点引用。 | **准入**：Phase 2 完成。**准出**：代码编写完成，测试通过。 |
 | **Phase 4: 验证** | 运行 `validate.sh`，回答“防呆双问”。 | **准入**：Phase 3 完成。**准出**：`validate.sh` 提示 PASS 且双问已回答。 |
@@ -33,7 +35,7 @@ NO CONFLICT WITHOUT ESCALATION.
 
 ## 3. Red Flags 表 (反模式自查)
 
-🚨 **中断机制 (Iron Rule)**：一旦触发以下任何条目，必须**立即暂停**所有代码动作，并在对话中以 `🚨 BLUEPRINT RED FLAG TRIGGERED: [条目名]` 开头报告。
+🚨 **中断机制 (Iron Rule)**：一旦触发以下任何条目，必须**立即暂停**所有代码动作，并在对话中以 `🚨 BLUEPRINT RED FLAG TRIGGERED: [条目名]` 开头报告。获得批准后，**必须**将该触发事件及处理结果简短记录至 `harness/trace/failures.md`。
 
 | 条目名 | 触发条件 |
 | :--- | :--- |

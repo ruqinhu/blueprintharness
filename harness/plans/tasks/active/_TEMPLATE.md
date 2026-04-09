@@ -23,7 +23,7 @@
 ## 4. 🚀 实现步骤 (Step-by-Step)
 > 参考 Superpowers writing-plans 风格。
 
-- [ ] **Step 1: 编写失败测试**
+- [ ] **Step 1: 编写失败测试 (若适用)**
     - [ ] `code snippet or description`
     - [ ] `verification command`
 - [ ] **Step 2: 编写最小实现**
