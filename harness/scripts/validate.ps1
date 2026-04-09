@@ -72,12 +72,13 @@ if ($ActiveTasks) {
             Write-Host "  ❌ FAIL: 任务 $($Task.Name) 损坏，缺少“收尾反思”章节。" -ForegroundColor Red
             $Pass = $false
         } else {
-            $Q1NotFilled = $TaskContent -match "### Q1:[\s\S]*?\[回答"
-            $Q2NotFilled = $TaskContent -match "### Q2:[\s\S]*?\[回答"
-            if ($Q1NotFilled -or $Q2NotFilled) {
-                Write-Host "  ⚠️  WARN: $($Task.Name) 的 Q1 或 Q2 尚未填写完成，归档前必须回答。" -ForegroundColor Yellow
+            # 深度检查：检测是否保留了模板中的提示文字（即未填）
+            $Q1Unfilled = $TaskContent -match "### Q1:[\s\S]*?\[回答"
+            $Q2Unfilled = $TaskContent -match "### Q2:[\s\S]*?\[回答"
+            if ($Q1Unfilled -or $Q2Unfilled) {
+                Write-Host "  ⚠️  WARN: ${FilePath} 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。" -ForegroundColor Yellow
             } else {
-                Write-Host "  ✅ $($Task.Name): 收尾反思已就绪。" -ForegroundColor Green
+                Write-Host "  ✅ ${FilePath}: 收尾反思已填或已确认完成。" -ForegroundColor Green
             }
         }
     }

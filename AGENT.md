@@ -28,7 +28,7 @@ NO CONFLICT WITHOUT ESCALATION.
 | **Phase 1: 理解** | 基于 `harness/plans/specs/_TEMPLATE.md` 新建规格书。 | **准入**：Phase 0 完成。**准出**：人类批准位于 `harness/plans/specs/` 下的具名规格书文件。 |
 | **Phase 2: 分解** | 生成原子任务计划 `harness/plans/tasks/active/`。 | **准入**：Phase 1 完成。涉及“相关经验模式”扫描。**准出**：人类批准任务列表。 |
 | **Phase 3: 实现** | 编写代码，严格遵守 `@blueprint-ref` 锚点引用。 | **准入**：Phase 2 完成。**准出**：代码编写完成，测试通过。 |
-| **Phase 4: 验证** | 运行 `validate.sh`，回答“防呆双问”。 | **准入**：Phase 3 完成。**准出**：`validate.sh` 提示 PASS 且双问已回答。 |
+| **Phase 4: 验证** | 运行验证脚本，回答“防呆双问”。 | **准入**：Phase 3 完成。**准出**：验证脚本提示 PASS 且已回答任务末尾的 [防呆双问](#防呆双问定义)。 |
 | **Phase 5: 归档** | 迁移任务至 `completed/`，沉淀经验至 `memory/`。 | **准入**：Phase 4 完成。**准出**：目录清理完毕。 |
 
 ---
@@ -44,7 +44,7 @@ NO CONFLICT WITHOUT ESCALATION.
 | **Task Ballooning** | 任务规模超过预估工作量的 1/5 或涉及文件数过多。 |
 | **Silent Refactor** | 在实现业务功能时，“顺便”进行了大规模的技术重构。 |
 | **Ambiguity Guessing** | 面对文档 A 与 B 的冲突，自行决定以谁为准。 |
-| **Evidence Skipping** | 依赖“以前跑过”的结论，而非当次 `validate.sh` 的输出。 |
+| **Evidence Skipping** | 依赖“以前跑过”的结论，而非当次验证脚本的输出。 |
 
 ---
 
@@ -59,7 +59,14 @@ NO CONFLICT WITHOUT ESCALATION.
 
 ---
 
-## 5. 原子任务标准 (Atomicity)
+## 5. 防呆双问定义
+在 Phase 5 归档任务前，必须在任务文件末尾回答以下两个核心问题：
+- **Q1: 本次实现与业务文档有出入吗？**（评估偏差及风险）
+- **Q2: 本次是否发现了可复用的模式？**（提取知识至 `lessons.md`）
+
+---
+
+## 6. 原子任务标准 (Atomicity)
 
 单次 Task 的规模应严格控制在整个特性开发预估工作量的 **1/5 ~ 1/10**。
 每个任务必须是语义完整的单元。若发现实现路径过长，必须进一步拆分。
