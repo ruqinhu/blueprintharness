@@ -40,11 +40,12 @@ Write-Host ""
 Write-Host "🔍 [Probe 2] 检查蓝图核心文档完整性..."
 
 $RequiredDocs = @(
-    "harness/docs/DOMAIN_MODEL.md",
-    "harness/docs/BUSINESS_PROCESS.md",
-    "harness/docs/PRODUCT_SENSE.md",
-    "harness/docs/ARCHITECTURE.md",
-    "harness/docs/VERIFY.md"
+    "harness/spec/DOMAIN_MODEL.md",
+    "harness/spec/BUSINESS_PROCESS.md",
+    "harness/spec/PRODUCT_SENSE.md",
+    "harness/spec/ARCHITECTURE.md",
+    "harness/spec/VERIFY.md",
+    "harness/workflow.md"
 )
 
 foreach ($Doc in $RequiredDocs) {
@@ -63,18 +64,20 @@ Write-Host ""
 # ═══════════════════════════════════════
 Write-Host "🔍 [Probe 3] 检查待闭环任务的收尾反思..."
 
-$ActiveTasks = Get-ChildItem "harness/plans/tasks/active/*.md" -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne "_TEMPLATE.md" }
+$ActiveTasks = Get-ChildItem "harness/tasks/active/*.md" -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne "_TEMPLATE.md" }
 
 if ($ActiveTasks) {
     foreach ($Task in $ActiveTasks) {
         $TaskContent = Get-Content $Task.FullName -Raw
-        if ($TaskContent -notmatch "## 5. 🧘 收尾反思") {
+        # 匹配标题，对空格不敏感
+        if ($TaskContent -notmatch "##\s+5\.\s+🧘\s+收尾反思") {
             Write-Host "  ❌ FAIL: 任务 $($Task.Name) 损坏，缺少“收尾反思”章节。" -ForegroundColor Red
             $Pass = $false
         } else {
             # 深度检查：检测是否保留了模板中的提示文字（即未填）
-            $Q1Unfilled = $TaskContent -match "### Q1:[\s\S]*?\[回答"
-            $Q2Unfilled = $TaskContent -match "### Q2:[\s\S]*?\[回答"
+            # 优化正则以匹配不同换行符和潜在的空格
+            $Q1Unfilled = $TaskContent -match "###\s+Q1:[\s\S]*?\[回答"
+            $Q2Unfilled = $TaskContent -match "###\s+Q2:[\s\S]*?\[回答"
             if ($Q1Unfilled -or $Q2Unfilled) {
                 Write-Host "  ⚠️  WARN: $($Task.Name) 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。" -ForegroundColor Yellow
             } else {

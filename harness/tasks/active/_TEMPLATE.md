@@ -7,7 +7,7 @@
 ## 1. 🔍 业务锚点 (Precision Anchor)
 > **Iron Rule: 无精确引用，不代码。**
 
-引用 `DOMAIN_MODEL` 或 `BUSINESS_PROCESS` 中的原文或锚点 ID。
+引用 `harness/spec/` 下的 `DOMAIN_MODEL` 或 `BUSINESS_PROCESS` 原文或锚点 ID。
 > **@blueprint-ref**: [精确锚点：文档标题/规则编号 BR-xxx/Mermaid节点ID] [引用的业务规则/流程简述]
 
 ## 2. 🧠 相关经验模式

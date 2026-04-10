@@ -44,11 +44,12 @@ echo ""
 echo "🔍 [Probe 2] 检查蓝图核心文档完整性..."
 
 REQUIRED_DOCS=(
-  "harness/docs/DOMAIN_MODEL.md"
-  "harness/docs/BUSINESS_PROCESS.md"
-  "harness/docs/PRODUCT_SENSE.md"
-  "harness/docs/ARCHITECTURE.md"
-  "harness/docs/VERIFY.md"
+  "harness/spec/DOMAIN_MODEL.md"
+  "harness/spec/BUSINESS_PROCESS.md"
+  "harness/spec/PRODUCT_SENSE.md"
+  "harness/spec/ARCHITECTURE.md"
+  "harness/spec/VERIFY.md"
+  "harness/workflow.md"
 )
 
 for doc in "${REQUIRED_DOCS[@]}"; do
@@ -67,17 +68,17 @@ echo ""
 # ═══════════════════════════════════════
 echo "🔍 [Probe 3] 检查待闭环任务的收尾反思..."
 
-ACTIVE_TASKS=$(ls harness/plans/tasks/active/*.md 2>/dev/null | grep -v "_TEMPLATE.md")
+ACTIVE_TASKS=$(ls harness/tasks/active/*.md 2>/dev/null | grep -v "_TEMPLATE.md")
 
 if [ -n "$ACTIVE_TASKS" ]; then
-  for task in $ACTIVE_TASKS; do
-    if ! grep -q "## 5. 🧘 收尾反思" "$task"; then
+    # 匹配标题，对空格不敏感
+    if ! grep -qE "##\s+5\.\s+🧘\s+收尾反思" "$task"; then
       echo_red "  ❌ FAIL: 任务 $task 损坏，缺少“收尾反思”章节。"
       PASS=false
     else
       # 深度检查：检测是否保留了模板中的提示文字（即未填）
-      Q1_UNFILLED=$(grep "### Q1:" "$task" -A 5 | grep "\[回答")
-      Q2_UNFILLED=$(grep "### Q2:" "$task" -A 5 | grep "\[回答")
+      Q1_UNFILLED=$(grep -E "###\s+Q1:" "$task" -A 5 | grep "\[回答")
+      Q2_UNFILLED=$(grep -E "###\s+Q2:" "$task" -A 5 | grep "\[回答")
       if [ -n "$Q1_UNFILLED" ] || [ -n "$Q2_UNFILLED" ]; then
         echo_yellow "  ⚠️  WARN: $task 的 Q1 或 Q2 尚未填写（保留了模板占位符），归档前必须回答。"
       else
