@@ -5,16 +5,19 @@
 ## 1. Iron Laws (核心铁律)
 
 ```text
+NO REINVENTING THE WHEEL (dc-framework only).
 NO CODE WITHOUT PRECISION ANCHOR.
 NO COMPLETION WITHOUT FRESH EVIDENCE.
 NO CONFLICT WITHOUT ESCALATION.
 ```
 
-- **精确锚点引用**：在生成任何业务代码前，必须引用 `harness/spec/` 中定义的 `DOMAIN_MODEL` 或 `BUSINESS_PROCESS` 原文。代码上方必须包含 `// @blueprint-ref: [锚点ID/规则编号BR-xxx/Mermaid节点] [引用的业务规则简述]`。
-- **证据先于断言**：在声明任何任务完成前，必须执行验证脚本并输出完整结果。
-  - Windows: `powershell -ExecutionPolicy Bypass -File harness/scripts/validate.ps1`
-  - Linux/sh: `bash harness/scripts/validate.sh`
-- **冲突即停并上报**：发现文档间存在冲突或歧义时，禁止自行揣测，必须立即停止并请求人类搭档裁决。
+- **禁止造轮子**：在设计/编码前，必须查阅 `harness/spec/TECH_STACK.md`。凡 `dc-framework` 已有的组件（如 dc-redis, dc-lock 等），严禁引入第三方库或自研原生实现。
+- **精确锚点引用**：在生成任何业务代码前，必须引用 `harness/spec/` 中定义的蓝图原文。代码上方必须包含：`// @blueprint-ref: [锚点ID/规则编号BR-xxx/Mermaid节点ID] [引用的业务规则/流程简述]`。
+- **证据先于断言**：在声明任务完成前，必须执行验证脚本且输出结果。禁止口头承诺完成，必须以脚本 PASS 为准：
+  - **Python (推荐)**: `python harness/scripts/validate.py`
+  - Legacy: `powershell -File harness/scripts/validate.ps1` 或 `bash harness/scripts/validate.sh`
+- **环境锁死**：本 Harness 仅在 Java/Maven 工程中生效。如根目录无 `pom.xml`，必须立即中止任务并报错。
+- **冲突即停并上报**：遇到文档歧义或蓝图冲突，禁止揣测，必须请求人类搭档裁决。
 
 ---
 
@@ -54,9 +57,10 @@ NO CONFLICT WITHOUT ESCALATION.
 ## 5. 法定仲裁优先级
 
 面对文档冲突时的决策顺序（由高到低）：
-1. **DOMAIN_MODEL.md** (领域实体与硬性业务规则)
-2. **BUSINESS_PROCESS.md** (业务时序与扭转流程)
-3. **PRODUCT_SENSE.md** (场景目标与痛点)
-4. **ARCHITECTURE.md** (技术架构分层)
+1. **TECH_STACK.md** (技术栈与组件白名单 — 不可违背的工程底座)
+2. **DOMAIN_MODEL.md** (领域实体与硬性业务规则)
+3. **BUSINESS_PROCESS.md** (业务时序与扭转流程)
+4. **PRODUCT_SENSE.md** (场景目标与痛点)
+5. **ARCHITECTURE.md** (技术架构分层)
 
 当发现低优先级文档与高优先级不符时，**汇报并寻求裁决**。

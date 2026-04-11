@@ -8,6 +8,7 @@
 
 ```mermaid
 graph TD
+    TS[TECH_STACK.md<br/>组件白名单/技术底座] -.-> AR
     PS[PRODUCT_SENSE.md<br/>业务背景/价值/风险] --> DM[DOMAIN_MODEL.md<br/>实体/规则/状态机]
     DM --> BP[BUSINESS_PROCESS.md<br/>时序图/扭转/异常]
     BP --> AR[ARCHITECTURE.md<br/>分层/依赖准则]
@@ -23,8 +24,9 @@ graph TD
 
 | 文档 | 核心内容 | 维护原则 |
 | :--- | :--- | :--- |
+| **TECH_STACK** | 解决“用什么工具”的问题。 | 核心权威资产。任何组件引入必须先核对白名单。 |
 | **PRODUCT_SENSE** | 解决“为什么做”的问题。 | 变更需评估对原有业务价值的波及。 |
-| **DOMAIN_MODEL** | 解决“抽象成什么”的问题。 | **P0 级权威**。任何字段/状态变更必须更新此文。 |
+| **DOMAIN_MODEL** | 解决“抽象成什么”的问题。 | 核心权威资产。任何字段/状态变更必须更新此文。 |
 | **BUSINESS_PROCESS** | 解决“如何协作”的问题。 | 必须包含由 `DOMAIN_MODEL` 定义的状态扭转。 |
 | **ARCHITECTURE** | 解决“代码位置”的问题。 | 严禁跨层调用，严禁反向依赖。 |
 | **VERIFY** | 解决“如何算完”的问题。 | 所有 AC (验收准则) 必须能在此找到归属。 |

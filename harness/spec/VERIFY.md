@@ -1,6 +1,11 @@
 # 验证清单与验收标准 (VERIFY.md)
 
 > 本文档定义了功能上线前的“生死门禁”。
+> 
+> ### 🚨 强制物理门禁
+> 任何代码提交前，**必须**运行并通过以下校验脚本，严禁人工绕过：
+> - **Python (推荐)**: `python harness/scripts/validate.py`
+> - Legacy (仅供参考): `harness/scripts/validate.ps1` (PS) 或 `harness/scripts/validate.sh` (Bash)
 
 ## 1. 业务功能验收 (UAT)
 

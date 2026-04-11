@@ -14,10 +14,12 @@ erDiagram
     USER ||--o{ ORDER : places
     
     ORDER {
-        string order_no PK "BR-001"
+        long id PK "ID (Auto-increment)"
+        string order_no "BR-001"
         string status "Enum"
         decimal total_amount
         datetime created_at
+        int deleted "Logic Delete: 0-norm, 1-del"
     }
     
     PAYMENT {

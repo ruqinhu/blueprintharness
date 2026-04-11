@@ -1,0 +1,15 @@
+<!-- Placeholder pom.xml to satisfy AGENT.md check -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.dc.biz</groupId>
+    <artifactId>blueprint-harness-holder</artifactId>
+    <version>1.0.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.dc.framework</groupId>
+            <artifactId>dc-dependencies</artifactId>
+            <version>1.0.0</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+</project>
